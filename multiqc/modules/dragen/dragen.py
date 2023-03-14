@@ -1,5 +1,6 @@
 import logging
 
+from .cnv_metrics import DragenCNVMetrics
 from .coverage_hist import DragenCoverageHist
 from .coverage_metrics import DragenCoverageMetrics
 from .coverage_per_contig import DragenCoveragePerContig
@@ -23,6 +24,7 @@ class MultiqcModule(
     DragenFragmentLength,
     DragenPloidyEstimationMetrics,
     DragenVCMetrics,
+    DragenCNVMetrics,
     DragenCoveragePerContig,
     DragenCoverageMetrics,
     DragenCoverageHist,
@@ -74,6 +76,9 @@ class MultiqcModule(
         samples_found |= self.add_wgs_coverage_metrics()
         # <output prefix>.wgs_coverage_metrics_normal.csv  - general stats table and a dedicated table
         # <output prefix>.wgs_coverage_metrics_tumor.csv   - same
+
+        samples_found |= self.add_cnv_metrics()
+        # <output prefix>.cnv_metrics.csv
 
         samples_found |= self.add_qc_region_coverage_metrics()
         # <output prefix>.qc-coverage-region-i_coverage_metrics.csv
